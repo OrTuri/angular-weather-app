@@ -1,0 +1,57 @@
+.main-container {
+  max-width: 900px;
+  margin: 30px auto;
+  box-shadow: 0 0 10px 1px rgb(0 0 0 / 10%);
+  border-radius: 10px;
+  padding: 20px;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .left-col {
+      display: flex;
+      justify-content: center;
+      align-items: end;
+      gap: 20px;
+
+      img {
+        width: 60px;
+      }
+
+      .city-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+      }
+    }
+
+    .right-col {
+      div {
+        cursor: pointer;
+        transition: all 0.5s;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+
+  .current-weather-desc {
+    font-size: 40px;
+    margin-top: 30px;
+    text-align: center;
+    font-weight: 400;
+  }
+
+  .day-cards-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+}

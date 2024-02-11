@@ -1,0 +1,34 @@
+.main-container {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 50px;
+    border-bottom: 1px solid #000;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    @media only screen and (max-width: 460px) {
+      justify-content: center;
+    }
+
+    .links-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      .nav-btn {
+        background-color: rgb(142, 152, 97);
+        padding: 10px;
+        border-radius: 10px;
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
+
+  main {
+    padding: 20px;
+  }
+}
