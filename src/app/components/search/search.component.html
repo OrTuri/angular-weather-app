@@ -1,4 +1,4 @@
 <div class="main-container">
-  <input type="text" />
-  <button>Search</button>
+  <input type="text" #searchInput placeholder="Enter a city name" />
+  <button (click)="onSearch(searchInput)">Search</button>
 </div>

@@ -2,12 +2,19 @@
   <header class="header">
     <h1 class="main-heading">Weather App</h1>
     <div class="links-container">
-      <a href="#" class="nav-btn">Home</a>
-      <a href="#" class="nav-btn">Favorites</a>
+      <a
+        routerLink="/"
+        class="nav-btn"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
+      <a routerLink="/favorites" class="nav-btn" routerLinkActive="active"
+        >Favorites</a
+      >
     </div>
   </header>
   <main>
-    <search></search>
-    <weather-details></weather-details>
+    <router-outlet></router-outlet>
   </main>
 </div>

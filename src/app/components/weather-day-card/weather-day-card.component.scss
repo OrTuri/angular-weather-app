@@ -1,7 +1,7 @@
 .card-container {
   padding: 20px;
   box-shadow: 0 0 10px 1px rgb(0 0 0 / 10%);
-  width: 150px;
+  width: 200px;
   border-radius: 15px;
   display: flex;
   justify-content: start;
@@ -18,7 +18,13 @@
     font-size: 30px;
   }
 
-  span {
-    font-size: 20px;
+  .temp-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-size: 20px;
+    }
   }
 }

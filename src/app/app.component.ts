@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { Increment, Decrement } from './state/weather.actions';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { GetWeatherService } from './services/get-weather.service';
 import { SearchComponent } from './components/search/search.component';
 import { WeatherDetailsComponent } from './components/weather-details/weather-details.component';
+import { LoadFavorites } from './state/weather.actions';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +15,9 @@ import { WeatherDetailsComponent } from './components/weather-details/weather-de
     RouterOutlet,
     SearchComponent,
     WeatherDetailsComponent,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -23,21 +26,27 @@ export class AppComponent implements OnInit {
   count: number = 0;
 
   constructor(
-    private store: Store<{ count: number }>,
+    private store: Store<{ weather: Object }>,
     private weatherService: GetWeatherService
   ) {
-    store.select('count').subscribe((data) => (this.count = data));
-  }
-  add() {
-    console.log(Increment());
-
-    this.store.dispatch(Increment());
-  }
-  subtract() {
-    this.store.dispatch(Decrement());
+    this.store.select('weather');
   }
 
   ngOnInit(): void {
-    this.weatherService.get5DayForecast();
+    this.weatherService.getAutoCompleteData('Tel Aviv');
+
+    this.store.dispatch(LoadFavorites());
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+        console.log('lat: ', lat);
+        console.log('long: ', long);
+      },
+      (error) => {
+        console.log('error');
+      }
+    );
   }
 }

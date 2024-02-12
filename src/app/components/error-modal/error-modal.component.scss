@@ -1,0 +1,41 @@
+.modal-overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000028;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+
+  .modal-content-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    top: 100px;
+
+    h5 {
+      font-size: 25px;
+    }
+
+    button {
+      align-self: center;
+      background-color: rgb(99, 147, 99);
+      font-size: 20px;
+      border: none;
+      border-radius: 20px;
+      width: 150px;
+      cursor: pointer;
+      color: #fff;
+      padding: 15px;
+    }
+  }
+}

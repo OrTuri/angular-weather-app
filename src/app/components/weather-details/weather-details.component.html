@@ -1,17 +1,26 @@
+<search></search>
 <div class="main-container">
   <div class="header-container">
     <div class="left-col">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Weather-sun-clouds-rain.svg/2048px-Weather-sun-clouds-rain.svg.png"
-        alt=""
+        [src]="'../../../assets/images/' + weatherData.currentWeather?.[0].WeatherIcon + '.png'"
+        alt="weather icon"
       />
       <div class="city-container">
-        <span class="city-name">Tel Aviv</span>
-        <span class="current-temp">24.5 &deg; c</span>
+        <span class="city-name">{{ weatherData?.cityName }}</span>
+        <span class="current-temp"
+          >{{ weatherData.currentWeather?.[0].Temperature.Metric.Value }} &deg;
+          c</span
+        >
       </div>
     </div>
     <div class="right-col">
-      <div class="favorite-icon-inactive" style="display: none">
+      <div
+        class="favorite-icon-inactive"
+        style="display: none"
+        (click)="addRemoveFavorite()"
+        [ngStyle]="{ display: isFavorite ? 'none' : 'block' }"
+      >
         <svg
           height="50px"
           width="50px"
@@ -56,7 +65,11 @@
           </g>
         </svg>
       </div>
-      <div class="favorite-icon-active">
+      <div
+        class="favorite-icon-active"
+        (click)="addRemoveFavorite()"
+        [ngStyle]="{ display: !isFavorite ? 'none' : 'block' }"
+      >
         <svg
           height="50px"
           width="50px"
@@ -103,12 +116,17 @@
       </div>
     </div>
   </div>
-  <h3 class="current-weather-desc">Scattered clouds</h3>
+  <h3 class="current-weather-desc">
+    {{ weatherData?.currentWeather?.[0].WeatherText }}
+  </h3>
   <div class="day-cards-container">
-    <weather-day-card></weather-day-card>
-    <weather-day-card></weather-day-card>
-    <weather-day-card></weather-day-card>
-    <weather-day-card></weather-day-card>
-    <weather-day-card></weather-day-card>
+    <div *ngFor="let day of weatherData.DailyForecasts">
+      <weather-day-card
+        [day]="day.Date"
+        [maxTemp]="day.Temperature.Maximum.Value"
+        [minTemp]="day.Temperature.Minimum.Value"
+      ></weather-day-card>
+    </div>
   </div>
 </div>
+<error-modal *ngIf="searchError"></error-modal>
