@@ -1,10 +1,13 @@
-<div class="main-container">
+<div class="main-container" [ngClass]="{darkMode}">
   <h1 class="main-heading">Favorites</h1>
   <div class="cards-container">
     <div class="card-container" *ngFor="let favorite of favorites; index as i">
       <div class="name-container" (click)="navigateToDetails(favorite)">
         <span class="city-name">{{ favorite.cityName }}</span>
-        <span>{{ temps[i] }}&deg;C</span>
+        <span
+          >{{ useF ? ((temps[i] * 9) / 5 + 32).toFixed(1) : temps[i] }}&deg;
+          {{ useF ? "F" : "C" }}</span
+        >
       </div>
       <div class="icon-container" (click)="removeFavorite(favorite)">
         <svg

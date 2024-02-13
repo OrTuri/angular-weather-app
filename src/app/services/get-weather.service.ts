@@ -237,17 +237,17 @@ export class GetWeatherService {
 
     this.http
       .get<IAutoComplete[]>(
-        `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apike=${
+        `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${
           environment.API_KEY
         }&q=${searchTerm || 'tel aviv'}`
       )
+
       .subscribe(
         (autoCompleteData) => {
           console.log(autoCompleteData);
           if (autoCompleteData.length < 1) {
             return;
           }
-
           const cityId = autoCompleteData?.[0].Key;
           this.getCurrentWeatherData(cityId).subscribe((currentWeatherData) => {
             this.store.dispatch(
@@ -281,13 +281,13 @@ export class GetWeatherService {
 
   getCurrentWeatherData(cityId: string): Observable<ICurrentWeather[]> {
     return this.http.get<ICurrentWeather[]>(
-      `http://dataservice.accuweather.com/currentconditions/v1/${cityId}?apikey=${environment.API_KEY}`
+      `https://dataservice.accuweather.com/currentconditions/v1/${cityId}?apikey=${environment.API_KEY}`
     );
   }
 
   get5DayForecast(cityId: string) {
     return this.http.get<I5DayForecast>(
-      `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityId}?apikey=${environment.API_KEY}&metric=true`
+      `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityId}?apikey=${environment.API_KEY}&metric=true`
     );
   }
 }

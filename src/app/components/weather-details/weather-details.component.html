@@ -1,5 +1,5 @@
 <search></search>
-<div class="main-container">
+<div class="main-container" [ngClass]="{darkMode}">
   <div class="header-container">
     <div class="left-col">
       <img
@@ -9,8 +9,8 @@
       <div class="city-container">
         <span class="city-name">{{ weatherData?.cityName }}</span>
         <span class="current-temp"
-          >{{ weatherData.currentWeather?.[0].Temperature.Metric.Value }} &deg;
-          c</span
+          >{{ useF ? ((weatherData.currentWeather?.[0].Temperature.Metric.Value * 9/5) + 32) :weatherData.currentWeather?.[0].Temperature.Metric.Value }}
+          &deg; {{ useF ? "F" : "C" }}</span
         >
       </div>
     </div>
@@ -125,6 +125,7 @@
         [day]="day.Date"
         [maxTemp]="day.Temperature.Maximum.Value"
         [minTemp]="day.Temperature.Minimum.Value"
+        [icon]="day.Day.Icon"
       ></weather-day-card>
     </div>
   </div>

@@ -23,10 +23,14 @@ export class WeatherDetailsComponent implements OnInit, DoCheck {
   weatherData: any = {};
   isFavorite: boolean = false;
   searchError: boolean = false;
+  darkMode: boolean = false;
+  useF: boolean = false;
 
   ngOnInit(): void {
     this.store.select('weather').subscribe((state) => {
       this.weatherData = state;
+      this.darkMode = state.darkMode;
+      this.useF = state.useFarenheit;
     });
   }
 

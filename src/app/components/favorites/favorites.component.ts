@@ -4,6 +4,7 @@ import {
   Component,
   DoCheck,
   OnChanges,
+  OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -19,9 +20,11 @@ import { ICurrentWeather } from '../../services/ICurrentWeather';
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss',
 })
-export class FavoritesComponent implements DoCheck, AfterViewInit {
+export class FavoritesComponent implements OnInit, AfterViewInit {
   favorites!: { cityKey: string; cityName: string }[];
   temps: number[] = [];
+  darkMode: boolean = false;
+  useF: boolean = false;
 
   constructor(
     private store: Store<{ weather: any }>,
@@ -56,9 +59,11 @@ export class FavoritesComponent implements DoCheck, AfterViewInit {
     },
   ];
 
-  ngDoCheck(): void {
+  ngOnInit(): void {
     this.store.select('weather').subscribe((state) => {
       this.favorites = [...state.favorites];
+      this.darkMode = state.darkMode;
+      this.useF = state.useFarenheit;
     });
   }
 

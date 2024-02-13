@@ -24,3 +24,13 @@ export const AddRemoveFavorite = createAction(
 );
 
 export const SearchError = createAction('SearchError');
+
+export const DarkMode = createAction(
+  'DarkMode',
+  props<{ darkMode: boolean }>()
+);
+
+export const useFarenheit = createAction(
+  'useFarenheit',
+  props<{ useFarenheit: boolean }>()
+);

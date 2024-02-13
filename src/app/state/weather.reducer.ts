@@ -2,12 +2,15 @@ import { createReducer, on } from '@ngrx/store';
 import {
   AddRemoveFavorite,
   CurrentWeather,
+  DarkMode,
   Forecase5Days,
   LoadFavorites,
   SearchError,
+  useFarenheit,
 } from './weather.actions';
+import { IState } from './IState';
 
-export const initialState: any = {};
+export const initialState: IState = { searchError: false } as IState;
 
 export const weatherReducer = createReducer(
   initialState,
@@ -48,5 +51,13 @@ export const weatherReducer = createReducer(
   }),
   on(SearchError, (state) => {
     return { ...state, searchError: state.searchError ? false : true };
+  }),
+  on(DarkMode, (state, payload) => {
+    localStorage.setItem('darkMode', payload.darkMode ? 'true' : 'false');
+    return { ...state, darkMode: payload.darkMode };
+  }),
+  on(useFarenheit, (state, payload) => {
+    localStorage.setItem('units', payload.useFarenheit ? 'true' : 'false');
+    return { ...state, useFarenheit: payload.useFarenheit };
   })
 );

@@ -1,17 +1,43 @@
-<div class="main-container">
+<div class="main-container" [ngClass]="{ darkMode }">
   <header class="header">
     <h1 class="main-heading">Weather App</h1>
     <div class="links-container">
-      <a
-        routerLink="/"
-        class="nav-btn"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        >Home</a
-      >
-      <a routerLink="/favorites" class="nav-btn" routerLinkActive="active"
-        >Favorites</a
-      >
+      <div class="toggles">
+        <div class="dark-mode-toggle">
+          <span>Dark Mode</span>
+          <label class="switch">
+            <input
+              type="checkbox"
+              (change)="onDarkModeToggle($event)"
+              #darkModeCheckbox
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="units-toggle">
+          <span>Use Farenheit</span>
+          <label class="switch">
+            <input
+              type="checkbox"
+              (change)="onUnitsToggle($event)"
+              #farenheitCheckbox
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+      <div class="links">
+        <a
+          routerLink="/"
+          class="nav-btn"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+        <a routerLink="/favorites" class="nav-btn" routerLinkActive="active"
+          >Favorites</a
+        >
+      </div>
     </div>
   </header>
   <main>

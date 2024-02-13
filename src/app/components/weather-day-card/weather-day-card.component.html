@@ -1,8 +1,14 @@
-<div class="card-container">
+<div class="card-container" [ngClass]="{darkMode}">
   <h5>{{ day }}</h5>
+  <img [src]="'../../../assets/images/' + icon + '.png'" alt="weather icon" />
   <div class="temp-container">
-    <span>{{ minTemp }}&deg;C </span> &nbsp; &mdash; &nbsp;<span
-      >{{ maxTemp }}&deg;C
+    <span
+      >{{ useF ? ((minTemp * 9) / 5 + 32).toFixed(1) : minTemp }}&deg;
+      {{ useF ? "F" : "C" }}
+    </span>
+    &nbsp; &mdash; &nbsp;<span
+      >{{ useF ? ((maxTemp * 9) / 5 + 32).toFixed(1) : maxTemp }}&deg;
+      {{ useF ? "F" : "C" }}
     </span>
   </div>
 </div>

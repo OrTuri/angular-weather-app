@@ -4,6 +4,7 @@
   align-items: center;
   margin: 20px 0;
   gap: 10px;
+  animation: move 1s ease-in-out;
 
   input {
     height: 40px;
@@ -37,5 +38,14 @@
     &:hover {
       transform: scale(1.07);
     }
+  }
+}
+
+@keyframes move {
+  0% {
+    transform: translateY(-20vh);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
