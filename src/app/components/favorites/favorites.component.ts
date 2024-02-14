@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
   DoCheck,
@@ -20,9 +21,9 @@ import { ICurrentWeather } from '../../services/ICurrentWeather';
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss',
 })
-export class FavoritesComponent implements OnInit, AfterViewInit {
+export class FavoritesComponent implements OnInit, AfterViewChecked {
   favorites!: { cityKey: string; cityName: string }[];
-  temps: number[] = [];
+  currentWeather: { temp: number; icon: number }[] = [];
   darkMode: boolean = false;
   useF: boolean = false;
 
@@ -67,15 +68,20 @@ export class FavoritesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewChecked(): void {
     this.favorites?.forEach((favorite, idx) => {
       this.weatherService.getCurrentWeatherData(favorite.cityKey).subscribe(
         (data) => {
-          this.temps[idx] = data?.[0].Temperature.Metric.Value;
+          this.currentWeather[idx] = {
+            temp: data?.[0].Temperature.Metric.Value,
+            icon: data?.[0].WeatherIcon,
+          };
         },
         (error) => {
-          this.temps[idx] =
-            this.currentWeatherMockData[0].Temperature.Metric.Value;
+          this.currentWeather[idx] = {
+            temp: this.currentWeatherMockData?.[0].Temperature.Metric.Value,
+            icon: this.currentWeatherMockData?.[0].WeatherIcon,
+          };
         }
       );
     });

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { GetWeatherService } from '../../services/get-weather.service';
+import { Store } from '@ngrx/store';
+import { IState } from '../../state/IState';
+import { ErrorModal } from '../../state/weather.actions';
 
 @Component({
   selector: 'search',
@@ -9,12 +12,15 @@ import { GetWeatherService } from '../../services/get-weather.service';
   styleUrl: './search.component.scss',
 })
 export class SearchComponent {
-  constructor(private weatherSerivce: GetWeatherService) {}
+  constructor(
+    private weatherSerivce: GetWeatherService,
+    private store: Store<{ weather: IState }>
+  ) {}
 
   onSearch(searchInput: HTMLInputElement) {
     const searchTerm = searchInput.value;
 
-    if (!searchTerm) return;
+    if (!searchTerm.trim()) return;
 
     const alphabetArray = [
       'a',
@@ -45,12 +51,20 @@ export class SearchComponent {
       'z',
     ];
 
-    const isValid = searchTerm.split('').every((letter) => {
-      if (letter === ' ') return true;
-      return alphabetArray.includes(letter);
-    });
+    const isValid = searchTerm
+      .toLowerCase()
+      .split('')
+      .every((letter) => {
+        if (letter === ' ') return true;
+        return alphabetArray.includes(letter);
+      });
 
-    if (!isValid) return;
+    if (!isValid) {
+      this.store.dispatch(
+        ErrorModal({ message: 'Please enter English letters only!' })
+      );
+      return;
+    }
 
     this.weatherSerivce.getAutoCompleteData(searchInput.value);
   }

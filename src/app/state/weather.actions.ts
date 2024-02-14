@@ -23,7 +23,10 @@ export const AddRemoveFavorite = createAction(
   props<{ cityKey: string; cityName: string }>()
 );
 
-export const SearchError = createAction('SearchError');
+export const ErrorModal = createAction(
+  'SearchError',
+  props<{ message: string }>()
+);
 
 export const DarkMode = createAction(
   'DarkMode',

@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(3px);
+  transition: all 0.3s;
 
   .modal-content-container {
     background-color: #fff;
@@ -21,6 +22,12 @@
     gap: 10px;
     position: fixed;
     top: 100px;
+    animation: move 1s ease-in-out;
+    max-width: 350px;
+
+    .error-message {
+      white-space: pre-line;
+    }
 
     h5 {
       font-size: 25px;
@@ -37,5 +44,20 @@
       color: #fff;
       padding: 15px;
     }
+  }
+}
+
+.modal-overlay.darkMode .modal-content-container {
+  background-color: #000;
+  border: 1px solid #a3a3a3;
+}
+
+@keyframes move {
+  0% {
+    transform: translateY(-150%);
+  }
+
+  100% {
+    transform: translateY(0);
   }
 }

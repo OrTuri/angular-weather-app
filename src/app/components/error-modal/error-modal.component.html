@@ -1,7 +1,7 @@
-<div class="modal-overlay">
+<div class="modal-overlay" [ngClass]="{ darkMode }">
   <div class="modal-content-container">
     <h5>Error! ⛔️</h5>
-    <span>Could not find the city you were looking for!</span>
+    <span class="error-message">{{ errorMessage }}</span>
     <button (click)="closeModal()">OK</button>
   </div>
 </div>

@@ -5,12 +5,12 @@ import {
   DarkMode,
   Forecase5Days,
   LoadFavorites,
-  SearchError,
+  ErrorModal,
   useFarenheit,
 } from './weather.actions';
 import { IState } from './IState';
 
-export const initialState: IState = { searchError: false } as IState;
+export const initialState: IState = { searchError: '' } as IState;
 
 export const weatherReducer = createReducer(
   initialState,
@@ -49,8 +49,8 @@ export const weatherReducer = createReducer(
 
     return { ...state, favorites: favoritesArr };
   }),
-  on(SearchError, (state) => {
-    return { ...state, searchError: state.searchError ? false : true };
+  on(ErrorModal, (state, payload) => {
+    return { ...state, searchError: state.searchError ? '' : payload.message };
   }),
   on(DarkMode, (state, payload) => {
     localStorage.setItem('darkMode', payload.darkMode ? 'true' : 'false');

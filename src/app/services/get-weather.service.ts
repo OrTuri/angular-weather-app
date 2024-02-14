@@ -6,7 +6,12 @@ import { IAutoComplete } from './IAutoComplete';
 import { ICurrentWeather } from './ICurrentWeather';
 import { I5DayForecast } from './I5DayForecast';
 import { Store } from '@ngrx/store';
-import { CurrentWeather, Forecase5Days } from '../state/weather.actions';
+import {
+  CurrentWeather,
+  Forecase5Days,
+  ErrorModal,
+} from '../state/weather.actions';
+import { IGetCityByCoords } from './IGetCityByCoords';
 
 @Injectable({
   providedIn: 'root',
@@ -216,6 +221,67 @@ export class GetWeatherService {
     ],
   };
 
+  getCityByCoordsMockData = {
+    Version: 1,
+    Key: '128713',
+    Type: 'City',
+    Rank: 75,
+    LocalizedName: 'Al Burj',
+    EnglishName: 'Al Burj',
+    PrimaryPostalCode: '',
+    Region: {
+      ID: 'AFR',
+      LocalizedName: 'Africa',
+      EnglishName: 'Africa',
+    },
+    Country: {
+      ID: 'EG',
+      LocalizedName: 'Egypt',
+      EnglishName: 'Egypt',
+    },
+    AdministrativeArea: {
+      ID: 'KFS',
+      LocalizedName: 'Kafr el-Sheikh',
+      EnglishName: 'Kafr el-Sheikh',
+      Level: 1,
+      LocalizedType: 'Governorate',
+      EnglishType: 'Governorate',
+      CountryID: 'EG',
+    },
+    TimeZone: {
+      Code: 'EET',
+      Name: 'Africa/Cairo',
+      GmtOffset: 2,
+      IsDaylightSaving: false,
+      NextOffsetChange: '2024-04-25T22:00:00Z',
+    },
+    GeoPosition: {
+      Latitude: 31.586,
+      Longitude: 30.983,
+      Elevation: {
+        Metric: {
+          Value: 0,
+          Unit: 'm',
+          UnitType: 5,
+        },
+        Imperial: {
+          Value: 0,
+          Unit: 'ft',
+          UnitType: 0,
+        },
+      },
+    },
+    IsAlias: false,
+    SupplementalAdminAreas: [],
+    DataSets: [
+      'AirQualityCurrentConditions',
+      'AirQualityForecasts',
+      'DailyPollenForecast',
+      'FutureRadar',
+      'MinuteCast',
+    ],
+  };
+
   getAutoCompleteData(searchTerm: string): void {
     const mockData: IAutoComplete[] = [
       {
@@ -237,15 +303,15 @@ export class GetWeatherService {
 
     this.http
       .get<IAutoComplete[]>(
-        `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${
-          environment.API_KEY
-        }&q=${searchTerm || 'tel aviv'}`
+        `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${environment.API_KEY}&q=${searchTerm}`
       )
 
       .subscribe(
         (autoCompleteData) => {
-          console.log(autoCompleteData);
           if (autoCompleteData.length < 1) {
+            this.store.dispatch(
+              ErrorModal({ message: 'Could not find any results!' })
+            );
             return;
           }
           const cityId = autoCompleteData?.[0].Key;
@@ -264,8 +330,12 @@ export class GetWeatherService {
           });
         },
         (error) => {
-          console.log(error);
-
+          this.store.dispatch(
+            ErrorModal({
+              message:
+                "The API didn't respond.\nMock data will be presented instead of real data",
+            })
+          );
           this.store.dispatch(
             CurrentWeather({
               currentWeather: <ICurrentWeather[]>this.currentWeatherMockData,
@@ -288,6 +358,12 @@ export class GetWeatherService {
   get5DayForecast(cityId: string) {
     return this.http.get<I5DayForecast>(
       `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityId}?apikey=${environment.API_KEY}&metric=true`
+    );
+  }
+
+  getCityNameByCoords(coords: [number, number]): Observable<IGetCityByCoords> {
+    return this.http.get<IGetCityByCoords>(
+      `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search&apikey=${environment.API_KEY}&q=${coords[0]},${coords[1]}`
     );
   }
 }

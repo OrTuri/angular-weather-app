@@ -71,17 +71,20 @@ export class AppComponent implements OnInit, AfterViewInit {
       );
     }
 
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     const lat = position.coords.latitude;
-    //     const long = position.coords.longitude;
-    //     console.log('lat: ', lat);
-    //     console.log('long: ', long);
-    //   },
-    //   (error) => {
-    //     console.log('error');
-    //   }
-    // );
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+        this.weatherService
+          .getCityNameByCoords([lat, long])
+          .subscribe((data) => {
+            this.weatherService.getAutoCompleteData(data.LocalizedName);
+          });
+      },
+      (error) => {
+        this.weatherService.getAutoCompleteData('tel aviv');
+      }
+    );
   }
 
   onDarkModeToggle(event: Event) {

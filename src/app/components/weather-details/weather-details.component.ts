@@ -3,7 +3,7 @@ import { WeatherDayCardComponent } from '../weather-day-card/weather-day-card.co
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { SearchComponent } from '../search/search.component';
-import { AddRemoveFavorite, SearchError } from '../../state/weather.actions';
+import { AddRemoveFavorite, ErrorModal } from '../../state/weather.actions';
 import { ErrorModalComponent } from '../error-modal/error-modal.component';
 
 @Component({

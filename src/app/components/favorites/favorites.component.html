@@ -4,9 +4,21 @@
     <div class="card-container" *ngFor="let favorite of favorites; index as i">
       <div class="name-container" (click)="navigateToDetails(favorite)">
         <span class="city-name">{{ favorite.cityName }}</span>
+        <img
+          [src]="
+            currentWeather[i]
+              ? '../../../assets/images/' + currentWeather[i].icon + '.png'
+              : ''
+          "
+          alt="weather icon"
+        />
         <span
-          >{{ useF ? ((temps[i] * 9) / 5 + 32).toFixed(1) : temps[i] }}&deg;
-          {{ useF ? "F" : "C" }}</span
+          >{{
+            useF
+              ? currentWeather[i] &&
+                ((currentWeather[i].temp * 9) / 5 + 32).toFixed(1)
+              : currentWeather[i] && currentWeather[i].temp
+          }}&deg; {{ useF ? "F" : "C" }}</span
         >
       </div>
       <div class="icon-container" (click)="removeFavorite(favorite)">
@@ -43,5 +55,6 @@
         </svg>
       </div>
     </div>
+    <h4 *ngIf="favorites.length < 1">There is nothing in your favorites!</h4>
   </div>
 </div>

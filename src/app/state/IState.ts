@@ -5,6 +5,6 @@ export interface IState {
   cityKey: string;
   currentWeather: ICurrentWeather[];
   favorites: { cityName: string; cityKey: string }[];
-  searchError?: boolean;
+  searchError?: string;
   useFarenheit: boolean;
 }
