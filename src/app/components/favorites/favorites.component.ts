@@ -21,7 +21,7 @@ import { ICurrentWeather } from '../../services/ICurrentWeather';
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss',
 })
-export class FavoritesComponent implements OnInit, AfterViewChecked {
+export class FavoritesComponent implements OnInit, AfterViewInit {
   favorites!: { cityKey: string; cityName: string }[];
   currentWeather: { temp: number; icon: number }[] = [];
   darkMode: boolean = false;
@@ -68,7 +68,7 @@ export class FavoritesComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  ngAfterViewChecked(): void {
+  ngAfterViewInit(): void {
     this.favorites?.forEach((favorite, idx) => {
       this.weatherService.getCurrentWeatherData(favorite.cityKey).subscribe(
         (data) => {
